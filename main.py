@@ -10,7 +10,7 @@ win = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('BOIDS !!!')
 clock = pygame.time.Clock()
 
-birds = bird.spawn_birds(300, win_dim)
+birds = bird.spawn_birds(200, win_dim)
 predators = predator.spawn_predators(0, win_dim)
 
 

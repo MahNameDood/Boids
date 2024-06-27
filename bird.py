@@ -64,9 +64,11 @@ class Bird():
 			avg[1] += self.pos[1] - n.pos[1]
 
 		avg = [avg[0]/len(neighbors), avg[1]/len(neighbors)]
-		avg = [avg[0] * 0.5, avg[1] * 0.5]
+		avg = [avg[0], avg[1]]
 		self.desired_vecs[2] = avg
 		self.steer_in_dir(avg)
+		self.steer_in_dir(avg)
+
 
 	def attract(self, neighbors):
 		avg = [0,0]
@@ -117,16 +119,16 @@ class Bird():
 		# OPERATIONS
 		
 		self.desired_vecs = [[0,0], [0,0], [0,0]]
-		if len(pred_neighbors):
+		if len(pred_neighbors) > 0:
 			self.repel(pred_neighbors)
 			self.repel(pred_neighbors)
 			self.alignment(pred_neighbors, True)
 
 
 		if len(neighbors) > 0:
+			self.alignment(neighbors)
 			self.attract(neighbors)
 			self.repel(neighbors)
-			self.alignment(neighbors)
 		else:
 			self.apply_force([random.randint(-1,1), random.randint(-1,1)])
 			
@@ -145,14 +147,8 @@ class Bird():
 		self.pos[1] += self.vel[1]
 
 		# CHECK FOR BOUNDARIES; WRAP AROUND IF OUTSIDE
-		if self.pos[0] > win_dim[0]:
-			self.pos[0] = 0
-		elif self.pos[0] < 0:
-			self.pos[0] = win_dim[0]
-		if self.pos[1] > win_dim[1]:
-			self.pos[1] = 0
-		elif self.pos[1] < 0:
-			self.pos[1] = win_dim[1]
+		self.pos[0] %= win_dim[0]
+		self.pos[1] %= win_dim[1]
 
 		
 
